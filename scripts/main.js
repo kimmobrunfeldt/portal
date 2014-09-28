@@ -17,37 +17,39 @@ function randomId(length) {
     return text;
 }
 
-function initShortcuts(portal) {
-    Mousetrap.bind('c', function() {
-        var portalId = window.prompt("Input portal id to connect");
-
-        if (portalId) {
-            portal.call(portalId);
-        }
-    });
-}
-
 window.onload = function() {
+    var isSlave = window.location.search === '?slave=true';
     var hash = getUrlHash();
 
-    if (!hash) {
+    if (!isSlave && !hash) {
         hash = randomId(3);
         window.location.hash = '#' + hash;
     }
 
-    var peer = new Peer(hash, {key: PEERJS_API_KEY, debug: 3});
+    // Master uses the id given in url
+    var peerId = isSlave ? randomId(10) : hash;
+    console.log('Use id', peerId);
+    var peer = new Peer(peerId, {key: PEERJS_API_KEY, debug: 3});
 
     peer.on('error', function(err) {
         console.log(err)
         if (err.type === 'unavailable-id') {
-            window.location.hash = '';
-            window.location.reload();
-        };
+            window.location.search = '?slave=true';
+        } else {
+            setTimeout(function() {
+                window.location.reload();
+            }, 10000);
+        }
     });
 
-    var portal = new Portal(peer, '#video', {
-
-    });
-
-    initShortcuts(portal);
+    // Workaround to prevent invalid state error in getUserMedia
+    setTimeout(function() {
+        var portal = new Portal(peer, '#video', {
+            ready: function() {
+                if (isSlave) {
+                    portal.call(hash);
+                }
+            }
+        });
+    }, 500);
 };

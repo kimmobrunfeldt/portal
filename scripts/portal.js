@@ -15,7 +15,6 @@
         this._peer = peer;
         this._video = document.querySelector(video);
 
-        this._lastCalled = null;
         this._localStream = null;
         this._getLocalStream();
 
@@ -26,13 +25,12 @@
         var self = this;
 
         console.info('Call to', portalId);
-        var call = self._peer.call(portalId, this._localStream);
+        var call = this._peer.call(portalId, this._localStream);
         call.on('stream', function(stream) {
             self._video.setAttribute('src', URL.createObjectURL(stream));
         });
 
-        this._lastCalled = portalId;
-        this._setupRecall(call);
+        this._setupRefresh(call);
     };
 
     Portal.prototype._setupAutoAnswer = function _setupAutoAnswer() {
@@ -44,22 +42,26 @@
             call.answer(self._localStream);
 
             call.on('stream', function(stream) {
-                console.log('stream')
                 self._video.setAttribute('src', URL.createObjectURL(stream));
             });
         });
     };
 
-    Portal.prototype._setupRecall = function _setupRecall(call) {
+    Portal.prototype._setupRefresh = function _setupRefresh(call) {
         var self = this;
 
-        call.on('close', function() {
-            console.info('Call closed');
-            console.info('Recalling in', self._opts.recallInterval / 1000, 'seconds');
-
+        function refreshAfterInterval() {
             setTimeout(function() {
-                self.call(self._lastCalled);
+                window.location.reload();
             }, self._opts.recallInterval);
+        }
+
+        call.on('close', function() {
+            refreshAfterInterval();
+        });
+
+        call.on('error', function(err) {
+            refreshAfterInterval();
         });
     };
 
@@ -68,6 +70,7 @@
 
         navigator.getUserMedia(this._opts.callOpts, function(stream) {
             self._localStream = stream;
+            self._opts.ready(stream);
         }, function(err) {
             console.error('Failed to get local video stream', err);
         });
