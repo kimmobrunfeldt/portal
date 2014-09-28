@@ -27,7 +27,7 @@ function initShortcuts(portal) {
     });
 }
 
-$(function() {
+window.onload = function() {
     var hash = getUrlHash();
 
     if (!hash) {
@@ -36,9 +36,18 @@ $(function() {
     }
 
     var peer = new Peer(hash, {key: PEERJS_API_KEY, debug: 3});
+
+    peer.on('error', function(err) {
+        console.log(err)
+        if (err.type === 'unavailable-id') {
+            window.location.hash = '';
+            window.location.reload();
+        };
+    });
+
     var portal = new Portal(peer, '#video', {
 
     });
 
     initShortcuts(portal);
-});
+};

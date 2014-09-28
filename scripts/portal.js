@@ -25,7 +25,7 @@
     Portal.prototype.call = function call(portalId) {
         var self = this;
 
-        this._stopRecallLoop();
+        console.info('Call to', portalId);
         var call = self._peer.call(portalId, this._localStream);
         call.on('stream', function(stream) {
             self._video.setAttribute('src', URL.createObjectURL(stream));
@@ -39,6 +39,8 @@
         var self = this;
 
         this._peer.on('call', function(call) {
+            console.info('Incoming call');
+
             call.answer(self._localStream);
 
             call.on('stream', function(stream) {
@@ -52,25 +54,13 @@
         var self = this;
 
         call.on('close', function() {
-            console.log('Call closed');
+            console.info('Call closed');
+            console.info('Recalling in', self._opts.recallInterval / 1000, 'seconds');
 
-            if (!self._recallTimer) {
-                self._startRecallLoop();
-            }
+            setTimeout(function() {
+                self.call(self._lastCalled);
+            }, self._opts.recallInterval);
         });
-    };
-
-    Portal.prototype._startRecallLoop = function _startRecallLoop(portalId) {
-        console.log('Trying to recall..');
-
-        this.call(portalId);
-        this._recallTimer = setTimeout(this._startRecallLoop.bind(this), this._opts.recallInterval);
-    };
-
-    Portal.prototype._stopRecallLoop = function _stopRecallLoop() {
-        if (this._recallTimer) {
-            clearTimeout(this._recallTimer);
-        }
     };
 
     Portal.prototype._getLocalStream = function _getLocalStream() {
