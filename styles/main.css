@@ -108,31 +108,24 @@ body, html {
   border: 1000px solid #444;
 }
 
-/* line 55, ../sass/main.scss */
+/* line 54, ../sass/main.scss */
 .portal-effect {
   position: fixed;
   z-index: 3;
   top: 50%;
   left: 50%;
-  margin-top: -260px;
-  margin-left: -260px;
-  width: 520px;
-  height: 520px;
+  margin-top: -280px;
+  margin-left: -280px;
+  width: 560px;
+  height: 560px;
 }
 
-/* line 69, ../sass/main.scss */
+/* line 68, ../sass/main.scss */
 .ring {
   z-index: 5;
 }
 
-/* line 73, ../sass/main.scss */
-.glow {
-  -webkit-filter: drop-shadow(-5px -5px 5px black);
-  filter: drop-shadow(-5px -5px 5px black);
-  /* Same syntax as box-shadow */
-}
-
-/* line 78, ../sass/main.scss */
+/* line 80, ../sass/main.scss */
 .spin-clockwise-slow {
   -webkit-animation-name: spin;
   -webkit-animation-duration: 20000ms;
@@ -141,57 +134,55 @@ body, html {
   transform-origin: 50% 50%;
 }
 
-/* line 86, ../sass/main.scss */
+/* line 84, ../sass/main.scss */
 .spin-counterclockwise-slow {
   -webkit-animation-name: spin;
   -webkit-animation-duration: 20000ms;
-  -webkit-animation-direction: reverse;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
   transform-origin: 50% 50%;
 }
 
-/* line 95, ../sass/main.scss */
+/* line 88, ../sass/main.scss */
 .spin-counterclockwise-fast {
   -webkit-animation-name: spin;
   -webkit-animation-duration: 10000ms;
-  -webkit-animation-direction: reverse;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
   transform-origin: 50% 50%;
 }
 
 @-moz-keyframes spin {
-  /* line 105, ../sass/main.scss */
+  /* line 93, ../sass/main.scss */
   from {
     -moz-transform: rotate(0deg);
   }
 
-  /* line 106, ../sass/main.scss */
+  /* line 94, ../sass/main.scss */
   to {
     -moz-transform: rotate(360deg);
   }
 }
 
 @-webkit-keyframes spin {
-  /* line 109, ../sass/main.scss */
+  /* line 97, ../sass/main.scss */
   from {
     -webkit-transform: rotate(0deg);
   }
 
-  /* line 110, ../sass/main.scss */
+  /* line 98, ../sass/main.scss */
   to {
     -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes spin {
-  /* line 113, ../sass/main.scss */
+  /* line 101, ../sass/main.scss */
   from {
     transform: rotate(0deg);
   }
 
-  /* line 114, ../sass/main.scss */
+  /* line 102, ../sass/main.scss */
   to {
     transform: rotate(360deg);
   }
