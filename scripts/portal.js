@@ -7,7 +7,12 @@
         this._opts = extend({
             recallInterval: 10000,
             callOpts: {
-                video: true,
+                video: {
+                    mandatory: {
+                        minWidth: 1900,
+                        minHeight: 1000
+                    }
+                },
                 audio: false
             }
         }, opts);
@@ -31,6 +36,19 @@
         });
 
         this._setupRefresh(call);
+    };
+
+    Portal.prototype.open = function open(percent, opts) {
+        this.setToPosition(100, opts);
+    };
+
+    Portal.prototype.close = function close(percent, opts) {
+        this.setToPosition(0, opts);
+    };
+
+    Portal.prototype.setToPosition = function setToPosition(percent, opts) {
+        var circle = document.querySelector(this._opts.selector);
+        //
     };
 
     Portal.prototype._setupAutoAnswer = function _setupAutoAnswer() {
@@ -71,8 +89,10 @@
         navigator.getUserMedia(this._opts.callOpts, function(stream) {
             self._localStream = stream;
             self._opts.ready(stream);
+            self._video.setAttribute('src', URL.createObjectURL(stream));
         }, function(err) {
             console.error('Failed to get local video stream', err);
+            self._opts.error(err);
         });
     };
 

@@ -42,6 +42,13 @@ window.onload = function() {
         }
     });
 
+    var audioPlayer = new AudioPlayer({
+        'open': 'audio/open.mp3'
+    });
+
+    audioPlayer['open'].loop(true);
+    audioPlayer['open'].play();
+
     // Workaround to prevent invalid state error in getUserMedia
     setTimeout(function() {
         var portal = new Portal(peer, '#video', {
@@ -49,7 +56,21 @@ window.onload = function() {
                 if (isSlave) {
                     portal.call(hash);
                 }
+            },
+            error: function(err) {
+                window.alert('Failed to open web camera: ' + err.name);
             }
         });
+
+        var sensor = new MotionSensor({
+            onHand: function(height) {
+                console.log('onHand', height)
+
+                var newVolume = _.min([1.1 - height, 1]);
+                audioPlayer['open'].volume(newVolume);
+
+            }
+        });
+
     }, 500);
 };

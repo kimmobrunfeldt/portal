@@ -59,7 +59,7 @@ table {
   border-spacing: 0;
 }
 
-/* line 6, ../sass/main.scss */
+/* line 7, ../sass/main.scss */
 body, html {
   width: 100%;
   height: 100%;
@@ -67,51 +67,132 @@ body, html {
   font-weight: 300;
 }
 
-/* line 13, ../sass/main.scss */
-h1 {
-  font-size: 4em;
-  color: #888;
-}
-
-/* line 18, ../sass/main.scss */
-.landing {
-  text-align: center;
+/* line 14, ../sass/main.scss */
+.video-container, .portal {
   height: 100%;
   width: 100%;
-  font-weight: 300;
 }
 
-/* line 26, ../sass/main.scss */
-.circle-progress {
-  float: left;
-  width: 150px;
-  padding: 40px 0 30px 0;
+/* line 19, ../sass/main.scss */
+.video-container {
+  position: absolute;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  overflow: hidden;
 }
 
-/* line 32, ../sass/main.scss */
-.square-progress {
-  float: left;
-  width: 150px;
-  padding: 40px 0 30px 30px;
+/* line 27, ../sass/main.scss */
+.video-container > video {
+  position: relative;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* line 34, ../sass/main.scss */
+.portal {
+  overflow: hidden;
 }
 
 /* line 38, ../sass/main.scss */
-.triangle-progress {
-  float: left;
-  width: 150px;
-  padding: 40px 0 30px 0;
+.circle {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -1250px;
+  margin-left: -1250px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  border: 1000px solid #444;
 }
 
-/* line 44, ../sass/main.scss */
-.progress-container {
-  width: 100%;
-  padding: 40px 0 30px 0;
+/* line 55, ../sass/main.scss */
+.portal-effect {
+  position: fixed;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  margin-top: -260px;
+  margin-left: -260px;
+  width: 520px;
+  height: 520px;
 }
 
-/* line 49, ../sass/main.scss */
-svg {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
+/* line 69, ../sass/main.scss */
+.ring {
+  z-index: 5;
+}
+
+/* line 73, ../sass/main.scss */
+.glow {
+  -webkit-filter: drop-shadow(-5px -5px 5px black);
+  filter: drop-shadow(-5px -5px 5px black);
+  /* Same syntax as box-shadow */
+}
+
+/* line 78, ../sass/main.scss */
+.spin-clockwise-slow {
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 20000ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  transform-origin: 50% 50%;
+}
+
+/* line 86, ../sass/main.scss */
+.spin-counterclockwise-slow {
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 20000ms;
+  -webkit-animation-direction: reverse;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  transform-origin: 50% 50%;
+}
+
+/* line 95, ../sass/main.scss */
+.spin-counterclockwise-fast {
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 10000ms;
+  -webkit-animation-direction: reverse;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  transform-origin: 50% 50%;
+}
+
+@-moz-keyframes spin {
+  /* line 105, ../sass/main.scss */
+  from {
+    -moz-transform: rotate(0deg);
+  }
+
+  /* line 106, ../sass/main.scss */
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  /* line 109, ../sass/main.scss */
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+
+  /* line 110, ../sass/main.scss */
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  /* line 113, ../sass/main.scss */
+  from {
+    transform: rotate(0deg);
+  }
+
+  /* line 114, ../sass/main.scss */
+  to {
+    transform: rotate(360deg);
+  }
 }

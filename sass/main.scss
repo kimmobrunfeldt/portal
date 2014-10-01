@@ -2,6 +2,8 @@
 
 @import "reset.scss";
 
+$circle-width: 100px;
+
 body, html {
     width: 100%;
     height: 100%;
@@ -9,7 +11,93 @@ body, html {
     font-weight: 300;
 }
 
-.video-container, .video-container > video {
+.video-container, .portal {
+    height: 100%;
     width: 100%;
-    
+}
+
+.video-container {
+    position: absolute;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    overflow: hidden;
+}
+
+.video-container > video {
+    position: relative;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.portal {
+    overflow: hidden;
+}
+
+.circle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    margin-top: -1250px;
+    margin-left: -1250px;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    border: 1000px solid #444;
+}
+
+.portal-effect {
+    position: fixed;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+
+    margin-top: -260px;
+    margin-left: -260px;
+
+    width: 520px;
+    height: 520px;
+}
+
+
+.ring {
+    z-index: 5;
+}
+
+@mixin spin-animation($duration, $direction) {
+    -webkit-animation-name: spin;
+    -webkit-animation-duration: $duration;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    transform-origin: 50% 50%;
+}
+
+.spin-clockwise-slow {
+    @include spin-animation(20000ms, normal);
+}
+
+.spin-counterclockwise-slow {
+    @include spin-animation(20000ms, reverse);
+}
+
+.spin-counterclockwise-fast {
+    @include spin-animation(10000ms, reverse);
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
 }
