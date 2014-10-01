@@ -47,6 +47,7 @@ window.onload = function() {
     });
 
     audioPlayer['open'].loop(true);
+    audioPlayer['open'].volume(settings.minVolume);
     audioPlayer['open'].play();
 
     // Workaround to prevent invalid state error in getUserMedia
@@ -66,9 +67,8 @@ window.onload = function() {
             onHand: function(height) {
                 console.log('onHand', height)
 
-                var newVolume = _.min([1.1 - height, 1]);
+                var newVolume = _.min([1 + settings.minVolume - height, 1]);
                 audioPlayer['open'].volume(newVolume);
-
             }
         });
 

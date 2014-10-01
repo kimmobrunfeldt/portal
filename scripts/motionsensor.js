@@ -10,8 +10,6 @@
         // Throttle leap loop to prevent high CPU usage
         var onHand = _.throttle(function(frame) {
             var hand = self._getLowestHand(frame.hands);
-            console.log('Amount of hands', frame.hands.length);;
-            console.log('Lowest hand', hand);
 
             var interactionBox = frame.interactionBox;
             var position = hand.stabilizedPalmPosition;
@@ -19,7 +17,7 @@
 
             // Hand's height will be value from 0 to 1
             self._opts.onHand(normalizedPosition[1]);
-        }, 100);
+        }, 200);
 
         Leap.loop(controllerOptions, function onFrame(frame) {
             if (frame.hands.length > 0) {
