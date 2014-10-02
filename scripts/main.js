@@ -89,6 +89,8 @@ window.onload = function() {
             selector: '.scalable'
         });
 
+        if (!isSlave) {
+
         var sensor = new MotionSensor({
             onHand: function(height) {
                 console.log('onHand', height)
@@ -97,21 +99,16 @@ window.onload = function() {
                 audioPlayer['humming'].volume(newVolume);
 
                 var position = 1 - height;
-                var newPosition = _.max([settings.minPortalPosition, position]);
-                portal.setToPosition((newPosition) * 100);
-
-                var video = document.getElementById('video');
-                var circleHeight = document.getElementById('effect-container').clientHeight;
-                var newHeight = position * circleHeight - 100 * position;
-
-                video.style.webkitMaskSize = newHeight + 'px';
+                portal.setToPosition(position);
 
                 portal.send({
                     command: 'open',
-                    value: newPosition
+                    value: position
                 });
             }
         });
+
+        }
 
     }, 500);
 

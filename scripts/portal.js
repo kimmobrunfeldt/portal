@@ -36,31 +36,35 @@
             self._video.setAttribute('src', URL.createObjectURL(stream));
         });
 
-        this._connection = peer.connect(portalId);
+        this._connection = this._peer.connect(portalId);
+        this._connection.on('data', function(data) {
+            self.onData(data);
+        });
+
         this._setupRefresh(call, this._connection);
     };
-
 
     Portal.prototype.send = function send(data) {
         this._connection.send(JSON.stringify(data));
     };
 
-    Portal.prototype.open = function open(percent, opts) {
-        this.setToPosition(100, opts);
-    };
+    Portal.prototype.setToPosition = function setToPosition(position, opts) {
+        var newPosition = _.max([settings.minPortalPosition, position]) * 100;
+        var video = document.getElementById('video');
+        var circleHeight = document.getElementById('effect-container').clientHeight;
+        var newHeight = position * circleHeight - 100 * position;
 
-    Portal.prototype.close = function close(percent, opts) {
-        this.setToPosition(0, opts);
-    };
+        video.style.webkitMaskSize = newHeight + 'px';
 
-    Portal.prototype.setToPosition = function setToPosition(percent, opts) {
         move(this._opts.selector)
           .duration(70)
-          .scale(percent / 100)
+          .scale(position)
           .end();
     };
 
     Portal.prototype.onData = function onData(data) {
+        data = JSON.parse(data);
+        console.log(data)
         if (data.command === 'open') {
             this.setToPosition(data.value);
         }
@@ -84,9 +88,9 @@
         var self = this;
 
         this._peer.on('connection', function(conn) {
-            conn.on('data', function(data) {
-                self.onData(JSON.parse(data));
-            });
+            console.log('Received connection')
+            self._connection = conn;
+            self._connection.on('data', self.onData);
         });
     };
 
