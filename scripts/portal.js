@@ -48,6 +48,7 @@
 
     Portal.prototype.setToPosition = function setToPosition(percent, opts) {
         move(this._opts.selector)
+          .duration(70)
           .scale(percent / 100)
           .end();
     };
@@ -90,6 +91,8 @@
         navigator.getUserMedia(this._opts.callOpts, function(stream) {
             self._localStream = stream;
             self._opts.ready(stream);
+            //self._video.setAttribute('src', URL.createObjectURL(stream));
+
         }, function(err) {
             console.error('Failed to get local video stream', err);
             self._opts.error(err);

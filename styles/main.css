@@ -61,20 +61,21 @@ table {
 
 /* line 10, ../sass/main.scss */
 body, html {
+  overflow: hidden;
   width: 100%;
   height: 100%;
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  background: #222222;
+  background: black;
 }
 
-/* line 18, ../sass/main.scss */
-.video-container, .portal {
+/* line 19, ../sass/main.scss */
+.video-container, .portal, .black-layer {
   height: 100%;
   width: 100%;
 }
 
-/* line 23, ../sass/main.scss */
+/* line 24, ../sass/main.scss */
 .video-container {
   position: absolute;
   -webkit-transform-style: preserve-3d;
@@ -83,50 +84,38 @@ body, html {
   overflow: hidden;
 }
 
-/* line 31, ../sass/main.scss */
+/* line 32, ../sass/main.scss */
 .video-container > video {
   position: relative;
   height: 100%;
   left: 50%;
   transform: translateX(-50%);
+  -webkit-mask-image: url(../images/circle.svg);
+  -webkit-mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 800px;
 }
 
-/* line 38, ../sass/main.scss */
-.portal {
-  overflow: hidden;
-}
-
-/* line 42, ../sass/main.scss */
-.circle {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -1300px;
-  margin-left: -1300px;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  border: 1000px solid #222222;
-}
-
-/* line 57, ../sass/main.scss */
-.portal-effect {
-  position: fixed;
+/* line 44, ../sass/main.scss */
+.effect-container {
+  position: absolute;
   z-index: 3;
   top: 50%;
   left: 50%;
-  margin-top: -350px;
-  margin-left: -350px;
-  width: 700px;
-  height: 700px;
+  margin-top: -450px;
+  margin-left: -450px;
+  width: 900px;
+  height: 900px;
 }
 
-/* line 71, ../sass/main.scss */
+/* line 57, ../sass/main.scss */
 .ring {
-  z-index: 5;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
-/* line 83, ../sass/main.scss */
+/* line 72, ../sass/main.scss */
 .spin-clockwise-slow {
   -webkit-animation-name: spin;
   -webkit-animation-duration: 10000ms;
@@ -135,7 +124,7 @@ body, html {
   transform-origin: 50% 50%;
 }
 
-/* line 87, ../sass/main.scss */
+/* line 76, ../sass/main.scss */
 .spin-counterclockwise-slow {
   -webkit-animation-name: spin;
   -webkit-animation-duration: 20000ms;
@@ -144,7 +133,7 @@ body, html {
   transform-origin: 50% 50%;
 }
 
-/* line 91, ../sass/main.scss */
+/* line 80, ../sass/main.scss */
 .spin-clockwise-fast {
   -webkit-animation-name: spin;
   -webkit-animation-duration: 5000ms;
@@ -154,36 +143,36 @@ body, html {
 }
 
 @-moz-keyframes spin {
-  /* line 96, ../sass/main.scss */
+  /* line 85, ../sass/main.scss */
   from {
     -moz-transform: rotate(0deg);
   }
 
-  /* line 97, ../sass/main.scss */
+  /* line 86, ../sass/main.scss */
   to {
     -moz-transform: rotate(360deg);
   }
 }
 
 @-webkit-keyframes spin {
-  /* line 100, ../sass/main.scss */
+  /* line 89, ../sass/main.scss */
   from {
     -webkit-transform: rotate(0deg);
   }
 
-  /* line 101, ../sass/main.scss */
+  /* line 90, ../sass/main.scss */
   to {
     -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes spin {
-  /* line 104, ../sass/main.scss */
+  /* line 93, ../sass/main.scss */
   from {
     transform: rotate(0deg);
   }
 
-  /* line 105, ../sass/main.scss */
+  /* line 94, ../sass/main.scss */
   to {
     transform: rotate(360deg);
   }

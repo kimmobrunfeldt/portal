@@ -12,25 +12,17 @@
         <link rel="stylesheet" href="styles/main.css">
     </head>
     <body>
+
         <div class="video-container">
             <video id="video" muted="true" autoplay></video>
         </div>
 
-        <div id="portal" class="portal">
-            <div class="scalable circle">
-
-            </div>
-
-            <div class="ring-container ring1-wrapper spin-clockwise-slow">
-                <img class="scalable ring portal-effect" src="images/portal_blue.png">
-            </div>
-
-            <div class="ring-container ring2-wrapper spin-clockwise-fast">
-                <img class="scalable ring portal-effect" src="images/portal_overlay_blue.png">
-            </div>
-
+        <div id="effect-container" class="scalable effect-container">
+            <img class="ring spin-clockwise-slow" src="images/portal_blue.png">
+            <img class="ring spin-clockwise-fast" src="images/portal_overlay_blue.png">
         </div>
 
+        <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
         <script src="scripts/lib/peer.js"></script>
         <script src="scripts/lib/leap-0.6.2.js"></script>
         <script src="scripts/lib/howler.js"></script>

@@ -67,6 +67,10 @@ window.onload = function() {
     audioPlayer['humming'].volume(0);
     audioPlayer['humming'].play();
 
+    if (isSlave) {
+        
+    }
+
     // Workaround to prevent invalid state error in getUserMedia
     setTimeout(function() {
         var portal = new Portal(peer, '#video', {
@@ -88,7 +92,15 @@ window.onload = function() {
                 var newVolume = _.min([1 + settings.minVolume - height, 1]);
                 audioPlayer['humming'].volume(newVolume);
 
-                portal.setToPosition((1 - height) * 100);
+                var position = 1 - height;
+                var newPosition = _.max([settings.minPortalPosition, position]);
+                portal.setToPosition((newPosition) * 100);
+
+                var video = document.getElementById('video');
+                var circleHeight = document.getElementById('effect-container').clientHeight;
+                var newHeight = position * circleHeight - 100 * position;
+
+                video.style.webkitMaskSize = newHeight + 'px';
             }
         });
 
