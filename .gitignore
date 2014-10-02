@@ -30,4 +30,3 @@ node_modules
 # SASS
 .sass-cache
 
-api-secret.js
