@@ -68,7 +68,11 @@ window.onload = function() {
     audioPlayer['humming'].play();
 
     if (isSlave) {
-        
+        var ring = document.getElementById('ring');
+        ring.setAttribute('src', 'images/portal_yellow.png');
+
+        var ringOverlay = document.getElementById('ring-overlay');
+        ringOverlay.setAttribute('src', 'images/portal_overlay_yellow.png');
     }
 
     // Workaround to prevent invalid state error in getUserMedia
@@ -101,6 +105,11 @@ window.onload = function() {
                 var newHeight = position * circleHeight - 100 * position;
 
                 video.style.webkitMaskSize = newHeight + 'px';
+
+                portal.send({
+                    command: 'open',
+                    value: newPosition
+                });
             }
         });
 

@@ -24,6 +24,7 @@
         this._getLocalStream();
 
         this._setupAutoAnswer();
+        this._setupDataListen();
     };
 
     Portal.prototype.call = function call(portalId) {
@@ -35,7 +36,13 @@
             self._video.setAttribute('src', URL.createObjectURL(stream));
         });
 
-        this._setupRefresh(call);
+        this._connection = peer.connect(portalId);
+        this._setupRefresh(call, this._connection);
+    };
+
+
+    Portal.prototype.send = function send(data) {
+        this._connection.send(JSON.stringify(data));
     };
 
     Portal.prototype.open = function open(percent, opts) {
@@ -53,6 +60,12 @@
           .end();
     };
 
+    Portal.prototype.onData = function onData(data) {
+        if (data.command === 'open') {
+            this.setToPosition(data.value);
+        }
+    };
+
     Portal.prototype._setupAutoAnswer = function _setupAutoAnswer() {
         var self = this;
 
@@ -67,7 +80,17 @@
         });
     };
 
-    Portal.prototype._setupRefresh = function _setupRefresh(call) {
+    Portal.prototype._setupDataListen = function _setupDataListen() {
+        var self = this;
+
+        this._peer.on('connection', function(conn) {
+            conn.on('data', function(data) {
+                self.onData(JSON.parse(data));
+            });
+        });
+    };
+
+    Portal.prototype._setupRefresh = function _setupRefresh(call, connection) {
         var self = this;
 
         function refreshAfterInterval() {
@@ -81,6 +104,14 @@
         });
 
         call.on('error', function(err) {
+            refreshAfterInterval();
+        });
+
+        connection.on('close', function() {
+            refreshAfterInterval();
+        });
+
+        connection.on('error', function(err) {
             refreshAfterInterval();
         });
     };
