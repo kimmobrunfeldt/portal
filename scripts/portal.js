@@ -89,7 +89,6 @@
         navigator.getUserMedia(this._opts.callOpts, function(stream) {
             self._localStream = stream;
             self._opts.ready(stream);
-            self._video.setAttribute('src', URL.createObjectURL(stream));
         }, function(err) {
             console.error('Failed to get local video stream', err);
             self._opts.error(err);
