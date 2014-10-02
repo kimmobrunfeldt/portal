@@ -17,6 +17,16 @@ function randomId(length) {
     return text;
 }
 
+function fullscreen() {
+    if (screenfull.enabled) {
+        screenfull.request();
+    }
+}
+
+function initShortcuts() {
+    Mousetrap.bind('f', fullscreen);
+}
+
 window.onload = function() {
     var isSlave = window.location.search === '?slave=true';
     var hash = getUrlHash();
@@ -43,12 +53,19 @@ window.onload = function() {
     });
 
     var audioPlayer = new AudioPlayer({
-        'open': 'audio/open.mp3'
+        'music': 'audio/music.mp3',
+        'close': 'audio/close_portal.mp3',
+        'humming': 'audio/humming.wav',
+        'open': 'audio/open_portal.mp3'
     });
 
-    audioPlayer['open'].loop(true);
-    audioPlayer['open'].volume(settings.minVolume);
-    audioPlayer['open'].play();
+    audioPlayer['music'].loop(true);
+    audioPlayer['music'].volume(settings.musicVolume);
+    audioPlayer['music'].play();
+
+    audioPlayer['humming'].loop(true);
+    audioPlayer['humming'].volume(0);
+    audioPlayer['humming'].play();
 
     // Workaround to prevent invalid state error in getUserMedia
     setTimeout(function() {
@@ -60,7 +77,8 @@ window.onload = function() {
             },
             error: function(err) {
                 window.alert('Failed to open web camera: ' + err.name);
-            }
+            },
+            selector: '.scalable'
         });
 
         var sensor = new MotionSensor({
@@ -68,9 +86,13 @@ window.onload = function() {
                 console.log('onHand', height)
 
                 var newVolume = _.min([1 + settings.minVolume - height, 1]);
-                audioPlayer['open'].volume(newVolume);
+                audioPlayer['humming'].volume(newVolume);
+
+                portal.setToPosition((1 - height) * 100);
             }
         });
 
     }, 500);
+
+    initShortcuts();
 };

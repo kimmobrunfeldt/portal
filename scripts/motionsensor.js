@@ -17,7 +17,7 @@
 
             // Hand's height will be value from 0 to 1
             self._opts.onHand(normalizedPosition[1]);
-        }, 200);
+        }, 100);
 
         Leap.loop(controllerOptions, function onFrame(frame) {
             if (frame.hands.length > 0) {

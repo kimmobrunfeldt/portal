@@ -47,8 +47,9 @@
     };
 
     Portal.prototype.setToPosition = function setToPosition(percent, opts) {
-        var circle = document.querySelector(this._opts.selector);
-        //
+        move(this._opts.selector)
+          .scale(percent / 100)
+          .end();
     };
 
     Portal.prototype._setupAutoAnswer = function _setupAutoAnswer() {

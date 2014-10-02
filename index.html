@@ -17,11 +17,17 @@
         </div>
 
         <div id="portal" class="portal">
-            <div class="circle">
+            <div class="scalable circle">
 
             </div>
-            <img class="ring spin-clockwise-slow portal-effect" src="images/portal_blue.png">
-            <img class="ring spin-counterclockwise-slow portal-effect" src="images/portal_overlay_blue.png">
+
+            <div class="ring-container ring1-wrapper spin-clockwise-slow">
+                <img class="scalable ring portal-effect" src="images/portal_blue.png">
+            </div>
+
+            <div class="ring-container ring2-wrapper spin-clockwise-fast">
+                <img class="scalable ring portal-effect" src="images/portal_overlay_blue.png">
+            </div>
 
         </div>
 
@@ -29,6 +35,9 @@
         <script src="scripts/lib/leap-0.6.2.js"></script>
         <script src="scripts/lib/howler.js"></script>
         <script src="scripts/lib/lodash.js"></script>
+        <script src="scripts/lib/screenfull.js"></script>
+        <script src="scripts/lib/mousetrap.min.js"></script>
+        <script src="scripts/lib/move.js"></script>
 
         <script src="scripts/api-secret.js"></script>
         <script src="scripts/settings.js"></script>
