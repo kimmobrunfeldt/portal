@@ -90,25 +90,23 @@ window.onload = function() {
         });
 
         if (!isSlave) {
+            var sensor = new MotionSensor({
+                onHand: function(height) {
+                    var newVolume = _.min([1 + settings.minVolume - height, 1]);
+                    newVolume = 0.3 * newVolume;
+                    audioPlayer['humming'].volume(newVolume);
 
-        var sensor = new MotionSensor({
-            onHand: function(height) {
-                console.log('onHand', height)
+                    var position = 1 - height;
+                    portal.setToPosition(position);
 
-                var newVolume = _.min([1 + settings.minVolume - height, 1]);
-                newVolume = 0.4 * newVolume;
-                audioPlayer['humming'].volume(newVolume);
-
-                var position = 1 - height;
-                portal.setToPosition(position);
-
-                portal.send({
-                    command: 'open',
-                    value: position
-                });
-            }
-        });
-
+                    if (portal.isConnected()) {
+                        portal.send({
+                            command: 'open',
+                            value: position
+                        });
+                    }
+                }
+            });
         }
 
     }, 500);

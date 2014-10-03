@@ -20,6 +20,7 @@
         this._peer = peer;
         this._video = document.querySelector(video);
 
+        this._connection = null;
         this._localStream = null;
         this._getLocalStream();
 
@@ -68,6 +69,10 @@
         if (data.command === 'open') {
             this.setToPosition(data.value);
         }
+    };
+
+    Portal.prototype.isConnected = function isConnected() {
+        return this._connection !== null;
     };
 
     Portal.prototype._setupAutoAnswer = function _setupAutoAnswer() {
