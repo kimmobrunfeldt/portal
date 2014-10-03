@@ -96,6 +96,7 @@ window.onload = function() {
                 console.log('onHand', height)
 
                 var newVolume = _.min([1 + settings.minVolume - height, 1]);
+                newVolume = 0.5 * newVolume;
                 audioPlayer['humming'].volume(newVolume);
 
                 var position = 1 - height;
