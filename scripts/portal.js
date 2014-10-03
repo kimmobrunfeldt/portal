@@ -103,6 +103,7 @@
         var self = this;
 
         function refreshAfterInterval() {
+            self.setToPosition(0);
             setTimeout(function() {
                 window.location.reload();
             }, self._opts.recallInterval);
