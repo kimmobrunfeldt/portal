@@ -93,7 +93,7 @@ body, html {
   -webkit-mask-image: url(../images/circle.svg);
   -webkit-mask-position: 50% 50%;
   -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: 800px;
+  -webkit-mask-size: 700px;
 }
 
 /* line 44, ../sass/main.scss */
@@ -102,10 +102,10 @@ body, html {
   z-index: 3;
   top: 50%;
   left: 50%;
-  margin-top: -450px;
-  margin-left: -450px;
-  width: 900px;
-  height: 900px;
+  margin-top: -400px;
+  margin-left: -400px;
+  width: 800px;
+  height: 800px;
 }
 
 /* line 57, ../sass/main.scss */
