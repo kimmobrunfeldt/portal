@@ -29,7 +29,7 @@
         console.info('Call to', portalId);
         var call = this._peer.call(portalId, this._localStream);
         call.on('stream', function(stream) {
-            self._video.setAttribute('src', URL.createObjectURL(stream));
+            self._video.srcObject = stream;
         });
 
         this._connection = this._peer.connect(portalId);
