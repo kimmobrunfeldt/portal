@@ -77,6 +77,29 @@ window.onload = function() {
 
     // Workaround to prevent invalid state error in getUserMedia
     setTimeout(function() {
+        var portal;
+
+        var sensor = new MotionSensor({
+            onHand: function(height, relative) {
+                var newVolume = _.min([1 + settings.minVolume - height, 1]);
+                newVolume = 0.3 * newVolume;
+                audioPlayer['humming'].volume(newVolume);
+
+                var position = height;
+                if (!relative) {
+                    position = 1 - height;
+                }
+                portal.setToPosition(position, relative);
+
+                if (portal.isConnected()) {
+                    portal.send({
+                        command: 'open',
+                        value: position
+                    });
+                }
+            }
+        });
+
         var portal = new Portal(peer, '#video', {
             ready: function() {
                 if (isSlave) {
@@ -88,26 +111,6 @@ window.onload = function() {
             },
             selector: '.scalable'
         });
-
-        if (!isSlave) {
-            var sensor = new MotionSensor({
-                onHand: function(height) {
-                    var newVolume = _.min([1 + settings.minVolume - height, 1]);
-                    newVolume = 0.3 * newVolume;
-                    audioPlayer['humming'].volume(newVolume);
-
-                    var position = 1 - height;
-                    portal.setToPosition(position);
-
-                    if (portal.isConnected()) {
-                        portal.send({
-                            command: 'open',
-                            value: position
-                        });
-                    }
-                }
-            });
-        }
 
     }, 500);
 

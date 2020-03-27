@@ -12,6 +12,8 @@
             }
         }, opts);
 
+        this._currentPos = 0;
+
         this._peer = peer;
         this._video = document.querySelector(video);
 
@@ -44,7 +46,12 @@
         this._connection.send(JSON.stringify(data));
     };
 
-    Portal.prototype.setToPosition = function setToPosition(position, opts) {
+    Portal.prototype.setToPosition = function setToPosition(position, relative) {
+        if (relative) {
+            position = Math.max(Math.min(this._currentPos + position, 1), 0);
+        }
+        this._currentPos = position;
+
         var newPosition = _.max([settings.minPortalPosition, position]) * 100;
         var video = document.getElementById('video');
         var circleHeight = document.getElementById('effect-container').clientHeight;

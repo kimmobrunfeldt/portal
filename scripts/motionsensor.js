@@ -19,6 +19,13 @@
             self._opts.onHand(normalizedPosition[1]);
         }, 150);
 
+        Mousetrap.bind('down', function() {
+            self._opts.onHand(-0.05, true);
+        });
+        Mousetrap.bind('up', function() {
+            self._opts.onHand(0.05, true);
+        });
+
         Leap.loop(controllerOptions, function onFrame(frame) {
             if (frame.hands.length > 0) {
                 onHand(frame);
