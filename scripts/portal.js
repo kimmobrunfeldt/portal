@@ -79,7 +79,7 @@
             call.answer(self._localStream);
 
             call.on('stream', function(stream) {
-                self._video.setAttribute('src', URL.createObjectURL(stream));
+                self._video.srcObject = stream;
             });
         });
     };
