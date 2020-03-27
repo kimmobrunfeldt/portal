@@ -7,12 +7,7 @@
         this._opts = extend({
             recallInterval: 10000,
             callOpts: {
-                video: {
-                    mandatory: {
-                        minWidth: 1900,
-                        minHeight: 1000
-                    }
-                },
+                video: true,
                 audio: false
             }
         }, opts);
@@ -129,15 +124,16 @@
     Portal.prototype._getLocalStream = function _getLocalStream() {
         var self = this;
 
-        navigator.getUserMedia(this._opts.callOpts, function(stream) {
-            self._localStream = stream;
-            self._opts.ready(stream);
-            //self._video.setAttribute('src', URL.createObjectURL(stream));
-
-        }, function(err) {
-            console.error('Failed to get local video stream', err);
-            self._opts.error(err);
-        });
+        navigator.mediaDevices.getUserMedia(this._opts.callOpts)
+            .then(function(stream) {
+                self._localStream = stream;
+                self._opts.ready(stream);
+                //self._video.setAttribute('src', URL.createObjectURL(stream));
+            })
+            .catch(function(err) {
+                console.error('Failed to get local video stream', err);
+                self._opts.error(err);
+            });
     };
 
     // Utility functions

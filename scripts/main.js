@@ -39,7 +39,7 @@ window.onload = function() {
     // Master uses the id given in url
     var peerId = isSlave ? randomId(10) : hash;
     console.log('Use id', peerId);
-    var peer = new Peer(peerId, {key: PEERJS_API_KEY, debug: 3});
+    var peer = new Peer(peerId, { secure: true, debug: 3 });
 
     peer.on('error', function(err) {
         console.log(err)
